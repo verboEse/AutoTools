@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.zelythia.autotools.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "GameModeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
