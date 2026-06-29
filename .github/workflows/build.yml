@@ -1,4 +1,4 @@
-name: Build
+name: Build & Release
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
 
     steps:
       - name: Checkout
@@ -39,18 +39,27 @@ jobs:
       - name: Build NeoForge
         run: ./gradlew neoforge:build
 
-      - name: Upload Fabric artifacts
+      - name: Get mod version
+        id: version
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
-        with:
-          name: autotools-fabric-${{ github.sha }}
-          path: fabric/build/libs/*.jar
-          retention-days: 7
+        run: |
+          VERSION=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)
+          MC_VERSION=$(grep '^minecraft_version=' gradle.properties | cut -d'=' -f2)
+          echo "MOD_VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "MC_VERSION=$MC_VERSION" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=fabric-v${VERSION}" >> $GITHUB_OUTPUT
 
-      - name: Upload NeoForge artifacts
+      - name: Create GitHub Release
         if: github.event_name == 'push'
-        uses: actions/upload-artifact@v4
+        uses: softprops/action-gh-release@v2
         with:
-          name: autotools-neoforge-${{ github.sha }}
-          path: neoforge/build/libs/*.jar
-          retention-days: 7
+          tag_name: ${{ steps.version.outputs.TAG_NAME }}
+          name: AutoTools ${{ steps.version.outputs.MC_VERSION }} v${{ steps.version.outputs.MOD_VERSION }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+          files: |
+            fabric/build/libs/!(*-@(dev|shadow|sources|javadoc)).jar
+            neoforge/build/libs/!(*-@(dev|shadow|sources|javadoc)).jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
