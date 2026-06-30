@@ -9,7 +9,7 @@ public class PlatformHelper {
 
     @ExpectPlatform
     public static HashSet<Path> getResourcePaths(String path) {
-        throw new AssertionError();
+        return new HashSet<>();
     }
 
 
