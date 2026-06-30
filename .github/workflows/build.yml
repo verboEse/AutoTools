@@ -59,7 +59,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            fabric/build/libs/!(*-@(dev|shadow|sources|javadoc|raw)).jar
-            neoforge/build/libs/!(*-@(dev|shadow|sources|javadoc|raw)).jar
+            fabric/build/libs/!(*-@(raw|dev|shadow|sources|javadoc)).jar
+            neoforge/build/libs/!(*-@(raw|dev|shadow|sources|javadoc)).jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
