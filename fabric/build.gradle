@@ -47,6 +47,9 @@ configurations {
 dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
+    implementation project(':common')
+    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+
     compileOnly("com.terraformersmc:modmenu:${rootProject.modmenu_version}") {
         transitive(false)
     }
@@ -59,10 +62,8 @@ dependencies {
     }
     shadowBundle("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "net.fabricmc", module: "fabric-loader")
     }
-
-    // Add the common module's API elements (its classes and resources) to the shadow bundle
-    shadowBundle project(path: ':common', configuration: 'apiElements')
 
     // compileOnly("com.mrcrayfish:controllable-common:${rootProject.controllable_version}"){
     //     exclude(group: "net.fabricmc.fabric-api")
