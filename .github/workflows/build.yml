@@ -5,6 +5,7 @@ on:
     branches: [26.2]
   pull_request:
     branches: [26.2]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -39,6 +40,11 @@ jobs:
       - name: Build NeoForge
         run: ./gradlew neoforge:build
 
+      - name: Remove non-shadow JARs
+        run: |
+          rm -f fabric/build/libs/*-raw.jar fabric/build/libs/*-sources.jar fabric/build/libs/*-dev.jar fabric/build/libs/*-javadoc.jar fabric/build/libs/*-shadow.jar
+          rm -f neoforge/build/libs/*-raw.jar neoforge/build/libs/*-sources.jar neoforge/build/libs/*-dev.jar neoforge/build/libs/*-javadoc.jar neoforge/build/libs/*-shadow.jar
+
       - name: Get mod version
         id: version
         if: github.event_name == 'push'
@@ -59,7 +65,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            fabric/build/libs/!(*-@(raw|dev|shadow|sources|javadoc)).jar
-            neoforge/build/libs/!(*-@(raw|dev|shadow|sources|javadoc)).jar
+            fabric/build/libs/*.jar
+            neoforge/build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
