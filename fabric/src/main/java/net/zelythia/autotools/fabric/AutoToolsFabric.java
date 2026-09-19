@@ -25,7 +25,6 @@ import net.zelythia.autotools.config.autoconfig.BlockList;
 import net.zelythia.autotools.config.autoconfig.BlockListAnnotationProvider;
 import net.zelythia.autotools.config.autoconfig.CustomToolsTransformer;
 import net.zelythia.autotools.config.autoconfig.HotbarSlots;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -33,8 +32,8 @@ import java.util.Optional;
 public class AutoToolsFabric implements ClientModInitializer {
     private static final KeyMapping.Category CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath(AutoTools.MOD_ID, "keys"));
 
-    private static final KeyMapping KEY_AUTOTOOLS = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.autotools.get_tool", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY));
-    private static final KeyMapping KEY_SILKTOUCH = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.autotools.silktouch", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_Z, CATEGORY));
+    private static final KeyMapping KEY_AUTOTOOLS = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.autotools.get_tool", InputConstants.Type.KEYBOARD, InputConstants.KEY_LALT, CATEGORY));
+    private static final KeyMapping KEY_SILKTOUCH = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.autotools.silktouch", InputConstants.Type.KEYBOARD, InputConstants.KEY_Z, CATEGORY));
     private boolean keyPressed = false;
 
 

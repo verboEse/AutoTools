@@ -56,7 +56,6 @@ dependencies {
 
     api "me.shedaniel.cloth:cloth-config-neoforge:${rootProject.cloth_config_version}"
 
-    // compileOnly("com.mrcrayfish:controllable-common:${rootProject.controllable_version}")
 }
 
 processResources {

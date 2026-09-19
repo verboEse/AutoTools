@@ -10,7 +10,8 @@ pluginManagement {
 
 include("common")
 include("fabric")
+// Forge is intentionally disabled; the 26.3 release ships Fabric and NeoForge only.
 //include("forge")
 include("neoforge")
 
-rootProject.name = "AutoTools-26.1.2"
+rootProject.name = "AutoTools-26.3"
